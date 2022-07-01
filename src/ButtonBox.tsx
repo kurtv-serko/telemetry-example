@@ -1,33 +1,24 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box, Button, Grid, Paper } from "@mui/material";
 import { AnalyticEvent, Elevations, ValueStreams } from "./telemetry/events";
-import {
-  ElevationContext,
-  useButtonTelemetryEvent,
-} from "./telemetry/hooks/useButtonTelemetryEvent";
+import { ElevationContext } from "./telemetry/hooks/useButtonTelemetryEvent";
 import { sendEvent } from "./telemetry/client";
 import { DialogExample } from "./DialogExample";
-import { useRefChange } from "./telemetry/hooks/useRefCallback";
+import { useButtonTelemetryHook } from "./telemetry/hooks/useTelemetryHook";
 
 interface ComposedProps {}
 
 export const ButtonBox: React.FC<ComposedProps> = () => {
-  const [buttonNode, buttonRef] = useRefChange();
-  useButtonTelemetryEvent(buttonNode);
+  const [buttonRef] = useButtonTelemetryHook();
+  const [divRef] = useButtonTelemetryHook();
+  const [disabledButtonRef] = useButtonTelemetryHook();
 
-  const [callbackButtonNode, callbackButtonRef] = useRefChange();
   const callBackEvent = useCallback((e: AnalyticEvent): void => {
     //use this when you need to intercept the log request, for example
     // e.g In a widget, where you can call the WidgetSDK
     sendEvent(e);
   }, []);
-  useButtonTelemetryEvent(callbackButtonNode, callBackEvent);
-
-  const [divNode, divRef] = useRefChange();
-  useButtonTelemetryEvent(divNode);
-
-  var disabledButtonRef = useRef(null);
-  // useButtonTelemetryEvent(disabledButtonRef);
+  const [callbackButtonRef] = useButtonTelemetryHook(callBackEvent);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 

@@ -1,13 +1,11 @@
 import React from "react";
 import { Box, Paper, TextField } from "@mui/material";
-import { useTextFieldTelemetryEvent } from "./telemetry/hooks/useButtonTelemetryEvent";
-import { useRefChange } from "./telemetry/hooks/useRefCallback";
+import { useTextFieldTelemetryHook } from "./telemetry/hooks/useTelemetryHook";
 
 interface ComposedProps {}
 
 export const InputBox: React.FC<ComposedProps> = () => {
-  var [textFieldNode, textFieldRef] = useRefChange();
-  useTextFieldTelemetryEvent(textFieldNode);
+  var [textFieldRef] = useTextFieldTelemetryHook();
 
   return (
     <Paper style={{ width: "100%", marginBottom: 32 }}>
