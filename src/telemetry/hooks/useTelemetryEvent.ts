@@ -1,21 +1,9 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useEffect, useMemo } from "react";
 import { sendEvent as sendTelemetryEvent } from "../client";
-import {
-  AnalyticEvent,
-  ButtonEvent,
-  Elevations,
-  InPageLocation,
-  TextFieldEvent,
-} from "../events";
+import { InPageLocationContext, ElevationContext } from "../context";
+import { AnalyticEvent, ButtonEvent, TextFieldEvent } from "../events";
 import { Interactions } from "../events/enumerations/Interactions";
-
-export const InPageLocationContext = React.createContext<
-  InPageLocation | undefined
->(undefined);
-export const ElevationContext = React.createContext<Elevations | undefined>(
-  undefined,
-);
 
 export const useButtonTelemetryEvent = (
   /**

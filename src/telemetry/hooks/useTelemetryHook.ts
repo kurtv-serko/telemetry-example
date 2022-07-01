@@ -3,7 +3,7 @@ import { AnalyticEvent } from "../events";
 import {
   useButtonTelemetryEvent,
   useTextFieldTelemetryEvent,
-} from "./useButtonTelemetryEvent";
+} from "./useTelemetryEvent";
 
 const useRefChange = () => {
   const [domNode, setDomNode] = useState(null);

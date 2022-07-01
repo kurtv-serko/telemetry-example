@@ -1,12 +1,9 @@
 import "./App.css";
 import { Container } from "@mui/material";
-import {
-  ElevationContext,
-  InPageLocationContext,
-} from "./telemetry/hooks/useButtonTelemetryEvent";
 import { Elevations, InPageLocation } from "./telemetry/events";
 import { ButtonBox } from "./ButtonBox";
 import { InputBox } from "./InputBox";
+import { ElevationContext, InPageLocationContext } from "./telemetry/context";
 
 function App() {
   return (

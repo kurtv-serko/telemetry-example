@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { Box, Button, Grid, Paper } from "@mui/material";
 import { AnalyticEvent, Elevations, ValueStreams } from "./telemetry/events";
-import { ElevationContext } from "./telemetry/hooks/useButtonTelemetryEvent";
 import { sendEvent } from "./telemetry/client";
 import { DialogExample } from "./DialogExample";
 import { useButtonTelemetryHook } from "./telemetry/hooks/useTelemetryHook";
+import { ElevationContext } from "./telemetry/context";
 
 interface ComposedProps {}
 
