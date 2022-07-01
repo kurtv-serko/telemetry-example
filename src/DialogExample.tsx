@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useButtonTelemetryEvent } from "./telemetry/hooks/useButtonTelemetryEvent";
-import { useRefCallback } from "./telemetry/hooks/useRefCallback";
+import { useRefChange } from "./telemetry/hooks/useRefCallback";
 
 interface Props {
   open: boolean;
@@ -8,15 +8,15 @@ interface Props {
 }
 
 export const DialogExample: React.FC<Props> = ({ open, onClose }) => {
-  const [closeRef] = useRefCallback();
-  useButtonTelemetryEvent(closeRef);
+  const [closeNode, closeRef] = useRefChange();
+  useButtonTelemetryEvent(closeNode);
 
   return (
     <>
       <Dialog open={open}>
         <DialogContent>This is a dialog</DialogContent>
         <DialogActions>
-          <Button ref={closeRef} onClick={onClose}>
+          <Button ref={closeRef} onClick={onClose} data-layer-value="close">
             Close
           </Button>
         </DialogActions>

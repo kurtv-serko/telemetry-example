@@ -19,9 +19,9 @@ export const ElevationContext = React.createContext<Elevations | undefined>(
 
 export const useButtonTelemetryEvent = (
   /**
-   * ref of the React component
+   * DOM node of the React component
    */
-  ref: any,
+  element: any,
   /**
    * Allow for override (e.g. Widget SDK)
    */
@@ -32,11 +32,7 @@ export const useButtonTelemetryEvent = (
   const inPageLocation = useContext(InPageLocationContext);
   const elevation = useContext(ElevationContext);
 
-  // console.log({ ref });
-
   useEffect(() => {
-    const element = ref.current;
-
     const handleClick = (_event: any) => {
       const buttonEvent = new ButtonEvent({
         type: element.getAttribute("data-layer-type") ?? "function",
@@ -53,8 +49,6 @@ export const useButtonTelemetryEvent = (
       sendEvent(buttonEvent);
     };
 
-    console.log({ element });
-
     if (element) element.addEventListener("click", handleClick);
 
     return () => {
@@ -62,15 +56,14 @@ export const useButtonTelemetryEvent = (
         element.removeEventListener("click", handleClick);
       }
     };
-    //cant use ref here, need to fix
-  }, [elevation, inPageLocation, ref, sendEvent]);
+  }, [element, elevation, inPageLocation, sendEvent]);
 };
 
 export const useTextFieldTelemetryEvent = (
   /**
-   * ref of the React component
+   * DOM node of the React component
    */
-  ref: any,
+  element: any,
   /**
    * Allow for override (e.g. Widget SDK)
    */
@@ -93,17 +86,14 @@ export const useTextFieldTelemetryEvent = (
       removeEmptyEntries(textFieldEvent);
       return textFieldEvent;
     }
-    const element = ref.current;
 
     const handleFocus = (event: any) => {
       event.stopImmediatePropagation();
-      const element = ref.current;
       const buttonEvent = createEvent(element, "focused");
       sendEvent(buttonEvent);
     };
 
     const handleBlur = (event: any) => {
-      const element = ref.current;
       const buttonEvent = createEvent(element, "unfocused");
       sendEvent(buttonEvent);
     };
@@ -119,7 +109,7 @@ export const useTextFieldTelemetryEvent = (
         element.removeEventListener("blur", handleBlur);
       }
     };
-  }, [elevation, inPageLocation, ref, sendEvent]);
+  }, [element, elevation, inPageLocation, sendEvent]);
 };
 
 /**

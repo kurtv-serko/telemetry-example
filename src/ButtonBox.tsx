@@ -7,26 +7,27 @@ import {
 } from "./telemetry/hooks/useButtonTelemetryEvent";
 import { sendEvent } from "./telemetry/client";
 import { DialogExample } from "./DialogExample";
+import { useRefChange } from "./telemetry/hooks/useRefCallback";
 
 interface ComposedProps {}
 
 export const ButtonBox: React.FC<ComposedProps> = () => {
-  var buttonRef = useRef(null);
-  useButtonTelemetryEvent(buttonRef);
+  const [buttonNode, buttonRef] = useRefChange();
+  useButtonTelemetryEvent(buttonNode);
 
-  var buttonExplicitRef = useRef(null);
+  const [callbackButtonNode, callbackButtonRef] = useRefChange();
   const callBackEvent = useCallback((e: AnalyticEvent): void => {
     //use this when you need to intercept the log request, for example
     // e.g In a widget, where you can call the WidgetSDK
     sendEvent(e);
   }, []);
-  useButtonTelemetryEvent(buttonExplicitRef, callBackEvent);
+  useButtonTelemetryEvent(callbackButtonNode, callBackEvent);
 
-  var divRef = useRef(null);
-  useButtonTelemetryEvent(divRef);
+  const [divNode, divRef] = useRefChange();
+  useButtonTelemetryEvent(divNode);
 
   var disabledButtonRef = useRef(null);
-  useButtonTelemetryEvent(disabledButtonRef);
+  // useButtonTelemetryEvent(disabledButtonRef);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -57,7 +58,7 @@ export const ButtonBox: React.FC<ComposedProps> = () => {
           <Grid item>
             <Button
               variant="contained"
-              ref={buttonExplicitRef}
+              ref={callbackButtonRef}
               data-layer-type="function"
               data-layer-value-stream={ValueStreams.Unknown}
               data-layer-label={"Button Event with Callback handler"}

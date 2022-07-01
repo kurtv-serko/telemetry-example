@@ -1,20 +1,10 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useState } from "react";
 
-export function useRefCallback() {
-  const ref = useRef(null);
-  const setRef = useCallback((node: any) => {
-    if (ref.current) {
-      // Make sure to cleanup any events/references added to the last instance
-    }
-
-    if (node) {
-      // Check if a node is actually passed. Otherwise node would be null.
-      // You can now do what you need to, addEventListeners, measure, etc.
-    }
-
-    // Save a reference to the node
-    ref.current = node;
+export const useRefChange = () => {
+  const [domNode, setDomNode] = useState(null);
+  const onRefChange = useCallback((node: any) => {
+    setDomNode(node); // trigger re-render on changes
   }, []);
 
-  return [setRef];
-}
+  return [domNode, onRefChange];
+};
